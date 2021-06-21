@@ -20,8 +20,9 @@ repositories {
 
 dependencies {
 	implementation(
-			"org.springframework.boot:spring-boot-starter-web",
-			"org.springframework.boot:spring-boot-starter-data-jpa",
+			'org.springframework.boot:spring-boot-starter-web',
+			'org.springframework.boot:spring-boot-starter-data-jpa',
+			'software.amazon.awssdk:s3:2.15.70'
 	)
 
 	compileOnly 'org.projectlombok:lombok'

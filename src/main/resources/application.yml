@@ -1,5 +1,5 @@
 server:
-  port: 7071
+  port: 80
 
 spring:
   profiles:
@@ -17,3 +17,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+s3:
+  endpoint:
+    url: http://localstack:4566
+  bucket: cloudx
+  region: eu-central-1
