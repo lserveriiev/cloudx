@@ -3,6 +3,7 @@ package io.lenur.aws.service;
 import io.lenur.aws.entity.Asset;
 import io.lenur.aws.exception.AssetNotFoundException;
 import io.lenur.aws.repository.AssetRepository;
+import io.lenur.aws.service.storage.Storageble;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,14 +17,14 @@ import java.util.UUID;
 public class AssetService {
 
     @Autowired
-    private final StorageService storageService;
+    private final Storageble storage;
 
     @Autowired
     private final AssetRepository repository;
 
     public Asset upload(MultipartFile file) {
         var key = UUID.randomUUID().toString();
-        storageService.upload(file, key);
+        storage.upload(file, key);
         var asset = Asset.builder()
                 .name(file.getOriginalFilename())
                 .size(file.getSize())
@@ -40,13 +41,18 @@ public class AssetService {
 
     public Asset getByKey(String key) {
         return this.repository
-                .getAssetByKey(key)
+                .getByS3Key(key)
                 .orElseThrow(AssetNotFoundException::new);
     }
 
     public void delete(String key) {
         var asset = this.getByKey(key);
-        storageService.delete(key);
+        storage.delete(key);
         this.repository.delete(asset);
+    }
+
+    public byte[] download(String key) {
+        var asset = this.getByKey(key);
+        return storage.download(asset.getS3Key());
     }
 }

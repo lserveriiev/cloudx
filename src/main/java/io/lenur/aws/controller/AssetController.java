@@ -45,6 +45,11 @@ public class AssetController {
         return new ResponseEntity<>(assetService.getByKey(key), HttpStatus.OK);
     }
 
+    @GetMapping("/{key}/download")
+    public byte[] download(@PathVariable String key) {
+        return assetService.download(key);
+    }
+
     @DeleteMapping("/{key}")
     public ResponseEntity<?> deleteItem(@PathVariable String key) {
         assetService.delete(key);

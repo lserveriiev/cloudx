@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface AssetRepository extends JpaRepository<Asset, Long> {
-    Optional<Asset> getAssetByKey(String key);
+    Optional<Asset> getByS3Key(String key);
 }

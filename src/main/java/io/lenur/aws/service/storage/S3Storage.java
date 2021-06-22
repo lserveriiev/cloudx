@@ -1,4 +1,4 @@
-package io.lenur.aws.service;
+package io.lenur.aws.service.storage;
 
 import io.lenur.aws.config.S3Config;
 import io.lenur.aws.exception.S3IOException;
@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
@@ -18,7 +19,7 @@ import java.util.HashMap;
 @Service
 @Log4j2
 @AllArgsConstructor
-public class StorageService {
+public class S3Storage implements Storageble {
     @Autowired
     private final S3Config s3Config;
 
@@ -49,6 +50,20 @@ public class StorageService {
             s3Client.putObject(objectRequest, RequestBody.fromBytes(file.getBytes()));
         } catch (IOException e) {
             LOGGER.error("The error has been occurred during putting the object to S3", e);
+            throw new S3IOException(e);
+        }
+    }
+
+    public byte[] download(String key) {
+        var getObjectRequest = GetObjectRequest.builder()
+                .bucket(s3Config.getBucket())
+                .key(key)
+                .build();
+        try {
+            var objectStream = s3Client.getObject(getObjectRequest);
+            return objectStream.readAllBytes();
+        } catch (IOException e) {
+            LOGGER.error("The error has been occurred during gathering the object from S3", e);
             throw new S3IOException(e);
         }
     }
