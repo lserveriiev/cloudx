@@ -12,7 +12,7 @@ s3:
   region: eu-central-1
 ```
 where the `bucket` property is mandatory. If you are using the [localstack](https://github.com/localstack/localstack) 
-for the development purpose, you can override the config.
+for the development purpose, you can override the config **endpoint.url**.
 
 ### Using the API
 
