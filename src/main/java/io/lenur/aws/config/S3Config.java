@@ -8,11 +8,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class S3Config {
     @Value("${s3.endpoint.url:#{null}}")
-    private String s3Endpoint;
+    private String endpoint;
 
     @Value("${s3.region:#{null}}")
     private String region;
 
     @Value("${s3.bucket}")
-    private String s3Bucket;
+    private String bucket;
 }

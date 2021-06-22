@@ -15,7 +15,7 @@ public class AppConfig {
     public S3Client s3Client(S3Config s3Config)
             throws URISyntaxException {
         return S3Client.builder()
-                .endpointOverride(new URI(s3Config.getS3Endpoint()))
+                .endpointOverride(new URI(s3Config.getEndpoint()))
                 .credentialsProvider(DefaultCredentialsProvider.create())
                 .region(Region.of(s3Config.getRegion()))
                 .build();
