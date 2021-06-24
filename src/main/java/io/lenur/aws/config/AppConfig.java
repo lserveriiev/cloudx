@@ -12,12 +12,12 @@ import java.net.URISyntaxException;
 @Configuration
 public class AppConfig {
     @Bean
-    public S3Client s3Client(S3Config s3Config)
+    public S3Client s3Client(AwsConfig awsConfig)
             throws URISyntaxException {
         return S3Client.builder()
-                .endpointOverride(new URI(s3Config.getEndpoint()))
+                .endpointOverride(new URI(awsConfig.getEndpoint()))
                 .credentialsProvider(DefaultCredentialsProvider.create())
-                .region(Region.of(s3Config.getRegion()))
+                .region(Region.of(awsConfig.getS3Region()))
                 .build();
     }
 }

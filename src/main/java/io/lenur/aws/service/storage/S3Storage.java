@@ -1,6 +1,6 @@
 package io.lenur.aws.service.storage;
 
-import io.lenur.aws.config.S3Config;
+import io.lenur.aws.config.AwsConfig;
 import io.lenur.aws.exception.S3IOException;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -21,14 +21,14 @@ import java.util.HashMap;
 @AllArgsConstructor
 public class S3Storage implements Storageble {
     @Autowired
-    private final S3Config s3Config;
+    private final AwsConfig awsConfig;
 
     @Autowired
     private final S3Client s3Client;
 
     public void delete(String key) {
         var deleteObjectRequest = DeleteObjectRequest.builder()
-                .bucket(s3Config.getBucket())
+                .bucket(awsConfig.getS3Bucket())
                 .key(key)
                 .build();
         s3Client.deleteObject(deleteObjectRequest);
@@ -41,7 +41,7 @@ public class S3Storage implements Storageble {
         metadata.put("filename", file.getName());
 
         var objectRequest = PutObjectRequest.builder()
-                .bucket(s3Config.getBucket())
+                .bucket(awsConfig.getS3Bucket())
                 .metadata(metadata)
                 .key(key)
                 .build();
@@ -56,7 +56,7 @@ public class S3Storage implements Storageble {
 
     public byte[] download(String key) {
         var getObjectRequest = GetObjectRequest.builder()
-                .bucket(s3Config.getBucket())
+                .bucket(awsConfig.getS3Bucket())
                 .key(key)
                 .build();
         try {

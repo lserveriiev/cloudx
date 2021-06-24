@@ -6,13 +6,13 @@ import org.springframework.context.annotation.Configuration;
 
 @Data
 @Configuration
-public class S3Config {
-    @Value("${s3.endpoint.url:#{null}}")
+public class AwsConfig {
+    @Value("${aws.endpoint.url:#{null}}")
     private String endpoint;
 
-    @Value("${s3.region:#{null}}")
-    private String region;
+    @Value("${aws.s3.region:#{null}}")
+    private String s3Region;
 
-    @Value("${s3.bucket}")
-    private String bucket;
+    @Value("${aws.s3.bucket}")
+    private String s3Bucket;
 }
