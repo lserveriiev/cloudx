@@ -46,6 +46,20 @@ Check the subscriptions:
 ```shell
 aws sns list-subscriptions
 ```
+#### Remove a subscription
+```shell
+curl --location --request DELETE 'http://localhost/sns/unsubscribe' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "{email}"
+}'
+```
+
+Check the subscriptions:
+```shell
+aws sns list-subscriptions
+```
+The response should be an empty list
 
 
 ### RDS

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,8 +20,14 @@ public class SnsController {
     private final SnsService snsService;
 
     @PostMapping(path = "/subscribe")
-    public ResponseEntity<?> upload(@RequestBody SubscribeSnsDto subscribeSnsDto) {
+    public ResponseEntity<?> subscribe(@RequestBody SubscribeSnsDto subscribeSnsDto) {
         snsService.subscribe(subscribeSnsDto.getEmail());
-        return new ResponseEntity<>("", HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(path = "/unsubscribe")
+    public ResponseEntity<?> unsubscribe(@RequestBody SubscribeSnsDto subscribeSnsDto) {
+        snsService.unsubscribe(subscribeSnsDto.getEmail());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
