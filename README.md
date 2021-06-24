@@ -21,6 +21,33 @@ aws:
 ```
 where the `bucket` property is mandatory.
 
+#### Configure the AWS SNS settings
+Navigate to `src/main/resources/application.yml` and edit the properties:
+```yaml
+aws:
+  sns:
+    topic-arn: arn:aws:sns:us-east-1:000000000000:CloudX-SNS-uploads-notification-topic
+```
+where the `sns.topic-arn` has to be created.
+
+### SNS/SQS
+
+#### Create a subscription
+```shell
+ curl --location --request POST 'http://{host}/sns/subscribe' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "{email}"
+}'
+```
+The email has to be confirmed. Just navigate to the email box {email} and confirm the {email}
+
+Check the subscriptions:
+```shell
+aws sns list-subscriptions
+```
+
+
 ### RDS
 
 #### 1. Upload a file
