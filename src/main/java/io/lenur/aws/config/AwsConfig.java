@@ -15,4 +15,10 @@ public class AwsConfig {
 
     @Value("${aws.s3.bucket}")
     private String s3Bucket;
+
+    @Value("${aws.sns.topic-arn}")
+    private String snsTopicArn;
+
+    @Value("${aws.sqs.queue}")
+    private String sqsQueue;
 }
