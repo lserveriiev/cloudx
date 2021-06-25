@@ -16,30 +16,43 @@ public class AppConfig {
     @Bean
     public S3Client s3Client(AwsConfig awsConfig)
             throws URISyntaxException {
-        return S3Client.builder()
-                .endpointOverride(new URI(awsConfig.getEndpoint()))
+        var clientBuilder =  S3Client.builder()
                 .credentialsProvider(DefaultCredentialsProvider.create())
-                .region(Region.of(awsConfig.getS3Region()))
-                .build();
+                .region(Region.of(awsConfig.getS3Region()));
+
+        if (awsConfig.getEndpoint() != null) {
+            clientBuilder.endpointOverride(new URI(awsConfig.getEndpoint()));
+        }
+
+        return clientBuilder.build();
+
     }
 
     @Bean
     public SnsClient buildSnsClient(AwsConfig awsConfig)
             throws URISyntaxException {
-        return SnsClient.builder()
-                .endpointOverride(new URI(awsConfig.getEndpoint()))
+        var clientBuilder =  SnsClient.builder()
                 .credentialsProvider(DefaultCredentialsProvider.create())
-                .region(Region.of(awsConfig.getS3Region()))
-                .build();
+                .region(Region.of(awsConfig.getS3Region()));
+
+        if (awsConfig.getEndpoint() != null) {
+            clientBuilder.endpointOverride(new URI(awsConfig.getEndpoint()));
+        }
+
+        return clientBuilder.build();
     }
 
     @Bean
     public SqsClient buildSqsClient(AwsConfig awsConfig)
             throws URISyntaxException {
-        return SqsClient.builder()
-                .endpointOverride(new URI(awsConfig.getEndpoint()))
+        var clientBuilder =  SqsClient.builder()
                 .credentialsProvider(DefaultCredentialsProvider.create())
-                .region(Region.of(awsConfig.getS3Region()))
-                .build();
+                .region(Region.of(awsConfig.getS3Region()));
+
+        if (awsConfig.getEndpoint() != null) {
+            clientBuilder.endpointOverride(new URI(awsConfig.getEndpoint()));
+        }
+
+        return clientBuilder.build();
     }
 }
