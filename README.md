@@ -48,7 +48,7 @@ aws sns list-subscriptions
 ```
 #### Remove a subscription
 ```shell
-curl --location --request DELETE 'http://localhost/sns/unsubscribe' \
+curl --location --request DELETE 'http://{host}/sns/unsubscribe' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "email": "{email}"

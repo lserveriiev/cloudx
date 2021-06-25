@@ -18,9 +18,10 @@ public class AssetService {
 
     @Autowired
     private final Storageble storage;
-
     @Autowired
     private final AssetRepository repository;
+    @Autowired
+    private final SqsService sqsService;
 
     public Asset upload(MultipartFile file) {
         var key = UUID.randomUUID().toString();
@@ -32,7 +33,9 @@ public class AssetService {
                 .mimeType(file.getContentType())
                 .build();
 
-        return this.repository.save(asset);
+        var assetPersist = this.repository.save(asset);
+        sqsService.sendMessage(String.valueOf(assetPersist.getId()));
+        return assetPersist;
     }
 
     public List<Asset> getList() {

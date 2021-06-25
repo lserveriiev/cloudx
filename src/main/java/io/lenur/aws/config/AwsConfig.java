@@ -18,4 +18,7 @@ public class AwsConfig {
 
     @Value("${aws.sns.topic-arn}")
     private String snsTopicArn;
+
+    @Value("${aws.sqs.queue}")
+    private String sqsQueue;
 }
