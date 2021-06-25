@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.services.sqs.SqsClient;
+import software.amazon.awssdk.services.sqs.model.DeleteMessageRequest;
 import software.amazon.awssdk.services.sqs.model.Message;
 import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest;
 import software.amazon.awssdk.services.sqs.model.SendMessageRequest;
@@ -28,6 +29,15 @@ public class SqsService {
                 .messageBody(payload)
                 .delaySeconds(10)
                 .build());
+    }
+
+    public void deleteMessage(Message message) {
+        var deleteMessageRequest = DeleteMessageRequest.builder()
+                .queueUrl(awsConfig.getSqsQueue())
+                .receiptHandle(message.receiptHandle())
+                .build();
+
+        sqsClient.deleteMessage(deleteMessageRequest);
     }
 
     public List<Message> getMessages() {

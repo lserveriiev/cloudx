@@ -22,7 +22,7 @@ public class SnsService {
     @Autowired
     private final AwsConfig awsConfig;
 
-    public void subscribe(String email) {
+    public void subscribeEmail(String email) {
         var request = SubscribeRequest.builder()
                 .protocol("email")
                 .endpoint(email)
@@ -32,14 +32,14 @@ public class SnsService {
         snsClient.subscribe(request);
     }
 
-    public void unsubscribe(String email) {
+    public void unsubscribeEmail(String email) {
         var request = UnsubscribeRequest.builder()
                 .subscriptionArn(getSubscriptionArn(email))
                 .build();
         snsClient.unsubscribe(request);
     }
 
-    public void publish(String message) {
+    public void publishMessage(String message) {
         var request = PublishRequest.builder()
                 .message(message)
                 .topicArn(awsConfig.getSnsTopicArn())

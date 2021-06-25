@@ -21,13 +21,13 @@ public class SnsController {
 
     @PostMapping(path = "/subscribe")
     public ResponseEntity<?> subscribe(@RequestBody SubscribeSnsDto subscribeSnsDto) {
-        snsService.subscribe(subscribeSnsDto.getEmail());
+        snsService.subscribeEmail(subscribeSnsDto.getEmail());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/unsubscribe")
     public ResponseEntity<?> unsubscribe(@RequestBody SubscribeSnsDto subscribeSnsDto) {
-        snsService.unsubscribe(subscribeSnsDto.getEmail());
+        snsService.unsubscribeEmail(subscribeSnsDto.getEmail());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
