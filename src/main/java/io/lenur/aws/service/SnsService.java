@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.services.sns.SnsClient;
 import software.amazon.awssdk.services.sns.model.ListSubscriptionsByTopicRequest;
+import software.amazon.awssdk.services.sns.model.PublishRequest;
 import software.amazon.awssdk.services.sns.model.SubscribeRequest;
 import software.amazon.awssdk.services.sns.model.Subscription;
 import software.amazon.awssdk.services.sns.model.UnsubscribeRequest;
@@ -36,6 +37,15 @@ public class SnsService {
                 .subscriptionArn(getSubscriptionArn(email))
                 .build();
         snsClient.unsubscribe(request);
+    }
+
+    public void publish(String message) {
+        var request = PublishRequest.builder()
+                .message(message)
+                .topicArn(awsConfig.getSnsTopicArn())
+                .build();
+
+        snsClient.publish(request);
     }
 
     private String getSubscriptionArn(String email) {

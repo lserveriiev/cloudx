@@ -6,7 +6,11 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.services.sqs.SqsClient;
+import software.amazon.awssdk.services.sqs.model.Message;
+import software.amazon.awssdk.services.sqs.model.ReceiveMessageRequest;
 import software.amazon.awssdk.services.sqs.model.SendMessageRequest;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -24,5 +28,13 @@ public class SqsService {
                 .messageBody(payload)
                 .delaySeconds(10)
                 .build());
+    }
+
+    public List<Message> getMessages() {
+        var receiveMessageRequest = ReceiveMessageRequest.builder()
+                .queueUrl(awsConfig.getSqsQueue())
+                .maxNumberOfMessages(5)
+                .build();
+        return sqsClient.receiveMessage(receiveMessageRequest).messages();
     }
 }

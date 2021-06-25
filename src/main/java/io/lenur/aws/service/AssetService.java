@@ -48,6 +48,10 @@ public class AssetService {
                 .orElseThrow(AssetNotFoundException::new);
     }
 
+    public Asset getById(Long id) {
+        return this.repository.getById(id);
+    }
+
     public void delete(String key) {
         var asset = this.getByKey(key);
         storage.delete(key);
