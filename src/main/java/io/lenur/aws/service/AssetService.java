@@ -4,6 +4,7 @@ import io.lenur.aws.entity.Asset;
 import io.lenur.aws.exception.AssetNotFoundException;
 import io.lenur.aws.repository.AssetRepository;
 import io.lenur.aws.service.storage.Storageble;
+import io.lenur.aws.util.EmailUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class AssetService {
                 .build();
 
         var assetPersist = this.repository.save(asset);
-        sqsService.sendMessage(String.valueOf(assetPersist.getId()));
+        sqsService.sendMessage(EmailUtil.generateBody(assetPersist));
         return assetPersist;
     }
 
@@ -46,10 +47,6 @@ public class AssetService {
         return this.repository
                 .getByS3Key(key)
                 .orElseThrow(AssetNotFoundException::new);
-    }
-
-    public Asset getById(Long id) {
-        return this.repository.getById(id);
     }
 
     public void delete(String key) {
