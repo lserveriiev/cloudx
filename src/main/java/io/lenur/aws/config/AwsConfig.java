@@ -21,4 +21,7 @@ public class AwsConfig {
 
     @Value("${aws.sqs.queue}")
     private String sqsQueue;
+
+    @Value("${aws.lambda.function-name}")
+    private String lambdaFunctionName;
 }

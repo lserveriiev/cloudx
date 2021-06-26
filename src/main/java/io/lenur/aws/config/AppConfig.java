@@ -1,9 +1,12 @@
 package io.lenur.aws.config;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.lambda.LambdaClient;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.sns.SnsClient;
 import software.amazon.awssdk.services.sqs.SqsClient;
@@ -54,5 +57,26 @@ public class AppConfig {
         }
 
         return clientBuilder.build();
+    }
+
+    @Bean
+    public LambdaClient buildLambdaClient(AwsConfig awsConfig)
+            throws URISyntaxException {
+        var clientBuilder =  LambdaClient.builder()
+                .credentialsProvider(DefaultCredentialsProvider.create())
+                .region(Region.of(awsConfig.getS3Region()));
+
+        if (awsConfig.getEndpoint() != null) {
+            clientBuilder.endpointOverride(new URI(awsConfig.getEndpoint()));
+        }
+
+        return clientBuilder.build();
+    }
+
+    @Bean
+    public Gson buildGson() {
+        return new GsonBuilder()
+                .setDateFormat("HH:mm:ss")
+                .create();
     }
 }

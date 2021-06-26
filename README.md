@@ -30,6 +30,25 @@ aws:
 ```
 where the `sns.topic-arn` has to be created.
 
+#### Configure the Lambda function
+```yaml
+aws:
+  lambda:
+    function-name: CloudX-uploads-batch-notifier
+```
+
+### Lambda
+#### Trigger a lambda function
+```shell
+ curl --location --request POST 'http://{host}/lambda/trigger' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "Records": [
+      {"body": "test message"}
+    ]
+}'
+```
+
 ### SNS/SQS
 
 #### Create a subscription
