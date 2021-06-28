@@ -2,19 +2,21 @@ version: 0.2
 
 phases:
   install:
+   commands:
+     - echo Entering install phase...
+     - echo Nothing to do now          
     runtime-versions:
       java: corretto11
-      gradle: 6.8.2
   pre_build:
     commands:
       - echo Nothing to do in the pre_build phase...
   build:
     commands:
       - echo Build started on `date`
-      - gradle clean build
+      - /usr/local/gradle-6.7/bin/gradle build
   post_build:
     commands:
       - echo Build completed on `date`
 artifacts:
   files:
-    - build/libs/aws-0.0.1-SNAPSHOT.jar
+    - 'build/libs/*.jar'
