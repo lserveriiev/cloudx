@@ -4,6 +4,7 @@ phases:
   install:
     runtime-versions:
       java: corretto11
+      gradle: 6.8.2
   pre_build:
     commands:
       - echo Nothing to do in the pre_build phase...
